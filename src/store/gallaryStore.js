@@ -4,9 +4,9 @@ class gallaryStore {
   @observable activeItem = null;
 
   @action
-  setItems(items) {
+  setItems = (items) => {
     this.items = items;
-  }
+  };
   @action
   setActiveItem = (el) => {
     this.activeItem = el;
