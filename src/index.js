@@ -5,15 +5,14 @@ import { GlobalStyle } from "./styles/GlobalStyle"; // Тема оформлен
 import { Provider } from "mobx-react";
 import App from "./App";
 import gallaryStore from "./store/gallaryStore";
-const store = {
+const stores = {
   gallaryStore,
 };
-console.log(store);
 ReactDOM.render(
   <React.StrictMode>
     <DeviceThemeProvider>
       <GlobalStyle />
-      <Provider>
+      <Provider {...stores}>
         <App />
       </Provider>
     </DeviceThemeProvider>

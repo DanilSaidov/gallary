@@ -6,57 +6,43 @@ import {
   Container,
   Row,
 } from "@sberdevices/ui";
-const items = [
-  {
-    title: "Item 1",
-    url:
-      "http://vitabrand.ru/image/cache/catalog/cb17e245eaec078ab370-300x300-300x300.jpg",
-  },
-  {
-    title: "Item 2",
-    url:
-      "http://vitabrand.ru/image/cache/catalog/cb17e245eaec078ab370-300x300-300x300.jpg",
-  },
-  {
-    title: "Item 3",
-    url:
-      "http://vitabrand.ru/image/cache/catalog/cb17e245eaec078ab370-300x300-300x300.jpg",
-  },
-  {
-    title: "Item 4",
-    url:
-      "http://vitabrand.ru/image/cache/catalog/cb17e245eaec078ab370-300x300-300x300.jpg",
-  },
-];
+import { inject, observer } from "mobx-react";
 
-function Carusel() {
+import { ImageCard } from "../";
+
+const Carusel = ({ gallaryStore }) => {
   const [index, setIndex] = React.useState(0);
+  const { gallaryCategories, setActiveCategory } = gallaryStore;
   const gallaryScroll = {
     next(i) {
-      if (i === items.length - 1) {
+      if (index === gallaryCategories.length - 1) {
         return false;
       }
       setIndex(index + 1);
     },
-    prev(i) {
-      if (i === 0) {
+    prev() {
+      if (index === 0) {
         return false;
       }
       setIndex(index - 1);
     },
   };
+  const onGallaryItemClick = (event, item) => {
+    setActiveCategory(item.categoryId);
+    console.log("carousel", gallaryStore);
+  };
+
   return (
-    <div className='carusel'>
+    <div className="carusel">
       <Container>
         <CarouselGridWrapper>
           <Carousel
-            as={Row}
-            axis='x'
+            axis="x"
             index={index}
             animatedScrollByIndex
-            scrollSnapType='proximity'
-            detectActive
-            detectThreshold={0.5}
+            scrollSnapType="mandatory"
+            detectActive={true}
+            scrollAlign="start"
             stylingCallback={() => {
               console.log("stylingCallback");
             }}
@@ -65,27 +51,26 @@ function Carusel() {
             }}
             onIndexChange={(i) => {
               setIndex(i);
-              console.log(i);
             }}
-            paddingStart='50%'
-            paddingEnd='50%'>
-            {items.map(({ title, url }, i) => (
-              <CarouselCol
-                onClick={(e) => console.log({ e, title, url })}
-                size={3}
-                key={`item:${i}`}>
-                {title}
-                <img src={url} />
+          >
+            {gallaryCategories.map((item, i) => (
+              <CarouselCol size={3} key={`item:${i}`} offset={1} type="calc">
+                <ImageCard
+                  title={item.title}
+                  //subtitle={subtitle}
+                  focused={i === index}
+                  imageSrc={item.imageUrl}
+                  onBtnClick={(event) => onGallaryItemClick(event, item)}
+                />
               </CarouselCol>
             ))}
           </Carousel>
         </CarouselGridWrapper>
-        <span onClick={() => gallaryScroll.prev(index)}> - </span>
-
-        <span onClick={() => gallaryScroll.next(index)}> + </span>
+        <span onClick={gallaryScroll.prev}> - </span>
+        <span onClick={gallaryScroll.next}>+</span>
       </Container>
     </div>
   );
-}
+};
 
-export default Carusel;
+export default inject("gallaryStore")(observer(Carusel));
