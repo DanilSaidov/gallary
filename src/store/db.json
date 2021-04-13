@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "imageUrl": "http://vitabrand.ru/image/cache/catalog/cb17e245eaec078ab370-300x300-300x300.jpg",
+      "title": "Поднятие рук лежа на скамье",
+      "categoryId": 1
+    },
+    {
+      "id": 5,
+      "imageUrl": "https://www.takzdorovo.ru/images/96/376/e4ea7fef73a6145d01433aa56c3/img.jpg",
+      "title": "Пресс",
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "imageUrl": "https://clarerooney.com/wp-content/uploads/2015/12/metabolic-type-300x300.jpg",
+      "title": "выносливость",
+      "categoryId": 2
+    },
+    {
+      "id": 3,
+      "imageUrl": "https://images.vogel.de/vogelonline/bdb/1039900/1039977/44.jpg",
+      "title": "сила",
+      "categoryId": 3
+    },
+    {
+      "id": 7,
+      "imageUrl": "http://vitabrand.ru/image/cache/catalog/cb17e245eaec078ab370-300x300-300x300.jpg",
+      "title": "Поднятие рук лежа на скамье",
+      "categoryId": 1
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { observable, action, makeObservable } from "mobx";
 
-import items from "../db.json"; //временно
+import items from "./db.json"; //временно
 class gallaryStore {
   gallaryCategories = items.tasks;
   activeCategoryItems = null;
