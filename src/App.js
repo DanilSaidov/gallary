@@ -1,5 +1,5 @@
 import React from "react";
-
+import { inject, observer } from "mobx-react";
 import {
   createSmartappDebugger,
   createAssistant,
@@ -9,46 +9,66 @@ import {
 import { Button } from "@sberdevices/ui/components/Button/Button";
 import { Carusel, GallaryModal } from "./components";
 import "./utils/Assistant.js";
-function App() {
+function App({ gallaryStore }) {
+  const { gallaryCategories, setActiveCategory } = gallaryStore;
+
+  const [carusel, dispatchCarusel] = React.useReducer(
+    (carusel, action) => {
+      switch (action.type) {
+        case "next":
+          if (carusel.activeIndex === gallaryCategories.length - 1) {
+            return { activeIndex: carusel.activeIndex };
+          }
+          return { activeIndex: carusel.activeIndex + 1 };
+        case "prev":
+          if (carusel.activeIndex === 0) {
+            return { activeIndex: carusel.activeIndex };
+          }
+          return { activeIndex: carusel.activeIndex - 1 };
+        default:
+          throw new Error();
+      }
+    },
+    { activeIndex: 0 }
+  );
   const initialize = (getState, getRecoveryState) => {
     if (process.env.NODE_ENV === "development") {
       return createSmartappDebugger({
-        // Токен из Кабинета разработчика
         token:
-          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMThmMmFjMzY4MGZlY2UzNGUyYWIyZGI3MmNmNDZlYTNiZTQ0MWUxYWM1ZTcwNjJmOGY5M2EzNzgyYTFkMWZkNTM5YmU5MjcwMDQyNjI5OCIsImF1ZCI6IlZQUyIsImV4cCI6MTYxODMwNjQ0OSwiaWF0IjoxNjE4MjIwMDM5LCJpc3MiOiJLRVlNQVNURVIiLCJ0eXBlIjoiQmVhcmVyIiwianRpIjoiNGI5MGJiODQtYTM4OS00ODYyLWE3MjctYmQ2NjFhYjc2MzhlIiwic2lkIjoiMGJjNTczMjEtZTA0Zi00NzdhLWIzZGQtY2JlYmE4ZWUzZmIxIn0.TZZahqYz1cNGdxnC4Ei5FXl2K98I7QCb_aQspJcfd1hK_MVvL3i_cTIhD-u47C_1YrqKBIUX74_f8Zuw7NNzA_M8VBGaUprJQGfZiDbVBaRtF5ZipvaizKmDNlvu4IFZ9F0ATZ3MbaYItnAoMJShl8H5RaDaSwaHljjFRznPDjiaQ771vglNe1n95tnGz0F2vPQgYMDQt9iGsMSg1hFCcnL_NQ_5K2YP0e94wgFCPj3dZ_oTorKlBiBj2_7irrmDBTjLNpnXDt1I0ujcyqJkzbppJ_NSp4N_OxvDw9RwM_j-QpsuK8hiXWza6O-7ymvlqmRJBlVHkGKksMw44g-lEEvoA1O_Yx_wJTbVKLB_YfzIGFfyqnuyp239eDkUZX51SSQkexeWuRQA9Srn85xb4TUkbzxMz3PSSgT2qq6-9lsERENzI4itxyBIPgcHlVU-6B7yH2FCaOtpsnBsTcLwxgUeRgbEjVSIZObyOSKM9Eqy1r6NUfrF8ytregM9Bi-Q3BqT2hDA4E9Q5lzthw_ijOLnWTUGV8VKa_YM8wZQkosp1_OAlwdqJpDPD-p-zdrgaDBQ3rFkW1oRCB8snoyQTSM2PWsgij-LyMKKv_J2iKTYQbaBAh5sv8dMxlWJGw7LzOiOJpzNcljWY65-CKS-0x5XHF2gAZJzYO5CqA-lObI",
-        // Пример фразы для запуска приложения
-        initPhrase: "начать gallary",
-        // Функция, которая возвращает текущее состояние приложения
+          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMThmMmFjMzY4MGZlY2UzNGUyYWIyZGI3MmNmNDZlYTNiZTQ0MWUxYWM1ZTcwNjJmOGY5M2EzNzgyYTFkMWZkNTM5YmU5MjcwMDQyNjI5OCIsImF1ZCI6IlZQUyIsImV4cCI6MTYxODM4OTY0MiwiaWF0IjoxNjE4MzAzMjMyLCJpc3MiOiJLRVlNQVNURVIiLCJ0eXBlIjoiQmVhcmVyIiwianRpIjoiMTdiNDM5MjctOGJmYS00MzRiLWEwYWEtNWQxNDZjNmFkNGQxIiwic2lkIjoiODlkN2NhYTktZjgyNi00NzAzLWIzZDktNDQ1MmY5NWRmY2FmIn0.fOJOvZQ9EVmt1g8LmctJ62nwLZCAcbLajeIPUDPfdrLEWjZOeE6p8YN9LoUxjl2o5Tqi2IbpxFKTqzdqrqwRQL-DVclCrMVPUIvKlzdmvoUa13MGxGopP4MEyvdLxzlieajRIEnlrnDQvjGxtNPkxhiRNTxs_zvPA5JGdS5aQuY91Obivyo9rGGCVbiEHsO3g75v4ZC0ZZImnrrw7NQNzrtMSCvY-L8xGmcpYPrvIzb_JXSt_FG7oPag3hWMLhait7eyjqzhe0OxpxM9cTDFI3GO5PfNTR3xZAPpyhu5bekh-GGETzBC-DVx5NXfFu1BgyY_hkbFL6jWEdYhtV_Yem0npM4oJJIMg7UIxi13J-gzJWVnbaNpkxGdUlHq1Q210VDJyfbLfQQKOxsSc09-xhFTgknepvRW4_jjXMxiAGXcIFnHtkInhrPA-bB5PrCxsYtENe6DsObx-uhYPnQKe0xb9SXAGrGs_JKc-9616nNLlaL8rEaIGqKI5cs49wVWsWbG09cDpQ2NcTIa6jDQ31XuiievBTw1InQldByrHwfHoCL5m4DUql5g60AWE_ZtDSCektzX7uexYe5tuVbDxns-Cg8msah74dFugK5uXa34N_W1ogef4MXVp-7cCIOLmAotTmDXs7pxNzgWDmh13APeoV8i4IJ8QWZ-evlfq_0",
+        initPhrase: "запустить saidov",
         getState,
-        // Функция, возвращающая состояние приложения, с которым приложение будет восстановлено при следующем запуске
         //getRecoveryStatel,
       });
     }
 
-    // Только для среды production
     return createAssistant({ getState, getRecoveryState });
   };
 
   const assistantStateRef = React.useRef();
   const assistantRef = React.useRef();
+
   React.useEffect(() => {
     assistantRef.current = initialize(() => assistantStateRef.current);
-    assistantRef.current.on("data", (command) => {
-      console.log(command);
-      // Подписка на команды ассистента, в т.ч. команда инициализации смартапа.
-
-      // Ниже представлен пример обработки голосовых команд "ниже"/"выше"
-      if (command.navigation) {
-        switch (command.navigation.command) {
-          case "UP":
-            window.scrollTo(0, 0);
+    assistantRef.current.on("data", (navigation) => {
+      console.log(navigation);
+      if (navigation.action) {
+        switch (navigation.action.type) {
+          case "next_card":
+            dispatchCarusel({ type: "next" });
             break;
-          case "DOWN":
-            window.scrollTo(0, 1000);
+          case "prev_card":
+            dispatchCarusel({ type: "prev" });
             break;
+          default:
+            console.log("Assistante action");
         }
       }
     });
+    return () => {
+      console.log("unmount", assistantRef.current);
+      assistantRef.current.close();
+    };
   }, []);
 
   const handleOnClick = () => {
@@ -63,7 +83,7 @@ function App() {
   const handleOnRefreshClick = () => {
     // Отправка сообщения бэкенду, с возможностью подписки на ответ.
     // В обработчик assistant.on('data'), сообщение передано не будет
-    console.log("handleOnClick");
+    console.log("handleOnRefreshClick");
     const unsubscribe = assistantRef.current.sendAction(
       { type: "some_action_name", payload: { param: "some" } },
       (data) => {
@@ -84,10 +104,15 @@ function App() {
       <p>
         <Button view="primary">Hello Plasma</Button>
       </p>
-      <Carusel />
+      <Carusel
+        activeIndex={carusel.activeIndex}
+        gallaryCategories={gallaryCategories}
+        setActiveCategory={setActiveCategory}
+        next={dispatchCarusel()}
+      />
       <GallaryModal />
     </div>
   );
 }
 
-export default App;
+export default inject("gallaryStore")(observer(App));
