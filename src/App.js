@@ -15,7 +15,7 @@ function App() {
       return createSmartappDebugger({
         // Токен из Кабинета разработчика
         token:
-          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMThmMmFjMzY4MGZlY2UzNGUyYWIyZGI3MmNmNDZlYTNiZTQ0MWUxYWM1ZTcwNjJmOGY5M2EzNzgyYTFkMWZkNTM5YmU5MjcwMDQyNjI5OCIsImF1ZCI6IlZQUyIsImV4cCI6MTYxODMwNjQ0OSwiaWF0IjoxNjE4MjIwMDM5LCJpc3MiOiJLRVlNQVNURVIiLCJ0eXBlIjoiQmVhcmVyIiwianRpIjoiNGI5MGJiODQtYTM4OS00ODYyLWE3MjctYmQ2NjFhYjc2MzhlIiwic2lkIjoiMGJjNTczMjEtZTA0Zi00NzdhLWIzZGQtY2JlYmE4ZWUzZmIxIn0.TZZahqYz1cNGdxnC4Ei5FXl2K98I7QCb_aQspJcfd1hK_MVvL3i_cTIhD-u47C_1YrqKBIUX74_f8Zuw7NNzA_M8VBGaUprJQGfZiDbVBaRtF5ZipvaizKmDNlvu4IFZ9F0ATZ3MbaYItnAoMJShl8H5RaDaSwaHljjFRznPDjiaQ771vglNe1n95tnGz0F2vPQgYMDQt9iGsMSg1hFCcnL_NQ_5K2YP0e94wgFCPj3dZ_oTorKlBiBj2_7irrmDBTjLNpnXDt1I0ujcyqJkzbppJ_NSp4N_OxvDw9RwM_j-QpsuK8hiXWza6O-7ymvlqmRJBlVHkGKksMw44g-lEEvoA1O_Yx_wJTbVKLB_YfzIGFfyqnuyp239eDkUZX51SSQkexeWuRQA9Srn85xb4TUkbzxMz3PSSgT2qq6-9lsERENzI4itxyBIPgcHlVU-6B7yH2FCaOtpsnBsTcLwxgUeRgbEjVSIZObyOSKM9Eqy1r6NUfrF8ytregM9Bi-Q3BqT2hDA4E9Q5lzthw_ijOLnWTUGV8VKa_YM8wZQkosp1_OAlwdqJpDPD-p-zdrgaDBQ3rFkW1oRCB8snoyQTSM2PWsgij-LyMKKv_J2iKTYQbaBAh5sv8dMxlWJGw7LzOiOJpzNcljWY65-CKS-0x5XHF2gAZJzYO5CqA-lObI",
+          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg1MTY2NjMsImV4cCI6MTYxODYwMzA2MywidHlwZSI6IkJlYXJlciIsImp0aSI6IjY2MjlkMDcxLTU4ZGUtNGFlNC04ZWU5LWFmNjc4YWYyMTc1MSIsInN1YiI6IjMxOGYyYWMzNjgwZmVjZTM0ZTJhYjJkYjcyY2Y0NmVhM2JlNDQxZTFhYzVlNzA2MmY4ZjkzYTM3ODJhMWQxZmQ1MzliZTkyNzAwNDI2Mjk4IiwiYXVkIjoiVlBTIn0.EhKp0ya962Pc7Ocv5k0o6oipqB8nPqDYL0635976dw3RsbJ6S8MfqhA0x9VDIsJdDjtmjCWimfbPYFQndJuCxQJJK3FCtIi4Ph2yEfrjX7bAfdqfYHbp2UPVyquuHfkcXIhkdcswaOovmIpbOFE1kmL8u-5xILKfgOvSsPRTmR3UJnuVpKzKpa6Fc3E5Zy9VROb3VBFkkbv025U9t1_7q9kymqNrwxWnlZnfM7pKp1i-fkQFVRKb3p7yeL5jf4VN2_X0fFdRMkSHkPpHYN9IAfp31SND2dxwU2sxag9eYlRTbhR859myRhnl_Ik5APndTLhnXNrIM--aaH9Fcumx8pl7i2oaZK1sQzOLn0CmQnLcLfj7Nb92dt1EWIMIu_LZGJCcP7nJb4Hbj4GcC7kMvnBMNXVG54G28pEpT2Ym3y29-eoxwLonkLRmdAGH4EfdxVUowxfv5M5nqFAqCK-fl_VRBXLSgGSWDQR8EVSh-e9tFT0EA5hdhH6ra-TcbTqtFc-s_ZDrgJRFu9PzNSHUFNc5qNeNajWAIuFOo0g5E5rC6C47OD3BJUwjLndujKIU7uZd78c1RYzTeDW3CpOFcXPgDoqbwOwOP11kxMP3V3RJ_CGRBBPgvCaJYfIEeHDDNrj3BImK2EegH7ZT8YbO6T-AEdP4OnS5T7rMU8mezA8",
         // Пример фразы для запуска приложения
         initPhrase: "начать gallary",
         // Функция, которая возвращает текущее состояние приложения
@@ -79,10 +79,10 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className='App'>
       <h1>Gallary App </h1>
       <p>
-        <Button view="primary">Hello Plasma</Button>
+        <Button view='primary'>Hello Plasma</Button>
       </p>
       <Carusel />
       <GallaryModal />
